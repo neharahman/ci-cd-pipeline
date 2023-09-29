@@ -1,0 +1,45 @@
+name: cicd pipeline
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use node js
+        uses: actions/setup-node@v1
+        with:
+          node-versions: ${{ matrix.node-version }}
+      - name: npm install and build
+      - run: |
+          npm install
+        
+        env:
+          CI: true
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          scripts: |
+              sudo apt update
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+              . ~/.nvm/nvm.sh
+              nvm install node
+              cd ci-cd-pipeline
+              git pull origin main
+              npm install
+              npm run start
+
