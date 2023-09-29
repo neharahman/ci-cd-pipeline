@@ -22,7 +22,7 @@ jobs:
         
         env:
           CI: true
-  deploy:
+  depoly:
     needs: [build]
     runs-on: ubuntu-latest
 
