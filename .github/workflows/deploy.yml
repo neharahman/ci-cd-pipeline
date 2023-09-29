@@ -43,7 +43,7 @@ jobs:
               . ~/.nvm/nvm.sh
 
               nvm install node
-              cd ci_cd_pipeline
+              cd ci-cd-pipeline
               git pull origin main
               npm install
               npm run start
