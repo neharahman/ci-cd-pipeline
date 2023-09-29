@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
+
     steps:
       - uses: actions/checkout@v2
       - name: Use node js
@@ -34,7 +35,6 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           scripts: |
-              sudo apt update
               curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
               . ~/.nvm/nvm.sh
               nvm install node
