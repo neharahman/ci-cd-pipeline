@@ -4,7 +4,7 @@ require('dotenv').config()
 
 
 app.get('/',(req,res)=>{
-    res.send('hello ci cd pipeline')
+    res.send('hello ci cd pipeline with port 8080')
 })
 app.get('/home',(req,res)=>{
     res.send('hello home')
